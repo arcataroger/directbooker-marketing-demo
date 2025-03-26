@@ -3,7 +3,7 @@ import { executeQuery } from "@datocms/cda-client";
 
 export default async function ArticlePage() {
   const result = await executeQuery(ArticleQuery, {
-    token: process.env.DATOCMS_GRAPHQL_TOKEN,
+    token: process.env.DATOCMS_GRAPHQL_TOKEN!,
   });
 
   return (

@@ -11,6 +11,7 @@ export const ArticleQuery = datoGraphql(
             value
             blocks {
                 ... on TableBlockRecord {
+                    __typename
                     id
                     table
                     caption
@@ -20,12 +21,14 @@ export const ArticleQuery = datoGraphql(
                 ... on FaqModelRecord {
                     id
                     faq {
+                        __typename
                         id
                         question
                         answer {
                             value
                             blocks {
                                 ... on TableBlockRecord {
+                                    __typename
                                     id
                                     table
                                     caption
