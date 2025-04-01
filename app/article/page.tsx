@@ -20,7 +20,7 @@ export default async function ArticlePage() {
   return (
     <>
       <h1>{title}</h1>
-      {!!content?.blocks && (
+      {!!content && (
         <StructuredText
           data={content}
           renderInlineRecord={(ctx) => {
