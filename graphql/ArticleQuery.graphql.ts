@@ -100,6 +100,14 @@ export const ArticleQuery = datoGraphql(
                                   value
                                   blocks {
                                       ...TableFragment
+                                      ... on NewsletterSubscriptionRecord {
+                                          __typename
+                                          id
+                                      }
+                                      ... on CtaButtonWithImageRecord {
+                                          __typename
+                                          id
+                                      }
                                   }
                               }
                           }
