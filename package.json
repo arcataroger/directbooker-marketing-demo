@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@datocms/cda-client": "^0.2.6",
+    "@sindresorhus/slugify": "^2.2.1",
+    "datocms-structured-text-to-plain-text": "^5.0.0",
     "gql.tada": "^1.8.10",
     "next": "15.2.4",
     "react": "^19.0.0",

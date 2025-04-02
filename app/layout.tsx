@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import './globals.css'
+import './globals.css';
+
+export const revalidate = 1;
 
 export const metadata: Metadata = {
   title: "DatoCMS DirectBooker Table Demo",
