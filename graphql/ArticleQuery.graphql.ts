@@ -1,8 +1,8 @@
 import { datoGraphql } from "@/graphql/graphql-lib";
 
 const TableFragment = datoGraphql(
-    //language=gql
-    `
+  //language=gql
+  `
         fragment TableFragment on TableBlockRecord @_unmask {
             __typename
             id
@@ -12,20 +12,20 @@ const TableFragment = datoGraphql(
 );
 
 const ButtonFragment = datoGraphql(
-    //language=gql
-    `fragment ButtonFragment on ButtonRecord @_unmask {
+  //language=gql
+  `fragment ButtonFragment on ButtonRecord @_unmask {
         __typename
         id
         label
         primary
         url
     }
-    `
-)
+    `,
+);
 
 const MediaFragment = datoGraphql(
-    //language=gql
-    `fragment MediaFragment on ImageBlockRecord @_unmask {
+  //language=gql
+  `fragment MediaFragment on ImageBlockRecord @_unmask {
         __typename
         id
         image {
@@ -70,58 +70,70 @@ const MediaFragment = datoGraphql(
             }
         }
     }
-    `
-)
+    `,
+);
 
 export const ArticleQuery = datoGraphql(
   //language=gql
   `
-      query MyQuery {
-          article {
-              id
-              title
-              slug
-              content {
-                  value
-                  blocks {
-                      ...TableFragment
-                      ...ButtonFragment
-                      ...MediaFragment
-                  }
-                  links {
-                      ... on FaqModelRecord {
-                          __typename
-                          id
-                          faq {
-                              __typename
-                              id
-                              question
-                              answer {
-                                  value
-                                  blocks {
-                                      ...TableFragment
-                                      ... on NewsletterSubscriptionRecord {
-                                          __typename
-                                          id
-                                      }
-                                      ... on CtaButtonWithImageRecord {
-                                          __typename
-                                          id
-                                      }
-                                  }
-                              }
-                          }
-                      }
-                      
-                      ... on ArticleRecord {
-                          __typename
-                          id
-                          slug
-                          title
-                      }
-                  }
-              }
-          }
-      }`, [TableFragment, ButtonFragment, MediaFragment],
+        query ArticleQuery($slug: String!) {
+            article(filter: {slug: {eq: $slug}}) {
+                id
+                title
+                slug
+                content {
+                    value
+                    blocks {
+                        ...TableFragment
+                        ...ButtonFragment
+                        ...MediaFragment
+                    }
+                    links {
+                        ... on FaqModelRecord {
+                            __typename
+                            id
+                            faq {
+                                __typename
+                                id
+                                question
+                                answer {
+                                    value
+                                    blocks {
+                                        ...TableFragment
+                                        ... on NewsletterSubscriptionRecord {
+                                            __typename
+                                            id
+                                        }
+                                        ... on CtaButtonWithImageRecord {
+                                            __typename
+                                            id
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        ... on ArticleRecord {
+                            __typename
+                            id
+                            slug
+                            title
+                        }
+                    }
+                }
+            }
+        }`,
+  [TableFragment, ButtonFragment, MediaFragment],
 );
 
+export const AllArticlesQuery = datoGraphql(
+  //language=graphql
+  `
+      query MyQuery {
+          allArticles(first: "500") {
+              slug
+              id
+              title
+          }
+      }`,
+);
