@@ -8,7 +8,7 @@ import {
 } from "react-datocms";
 import { hasChildren, isParagraph } from "datocms-structured-text-utils";
 import type { VariablesOf } from "gql.tada";
-import {notFound} from "next/navigation";
+import { notFound } from "next/navigation";
 
 type JsonTable = {
   columns: string[];
@@ -35,7 +35,7 @@ export default async function ArticlePage({
   const { article } = result;
 
   if (!article) {
-    notFound()
+    notFound();
   }
 
   const { title, content } = article;
@@ -118,9 +118,13 @@ const blockRenderer = (
           <tbody>
             {data.map((row, i) => (
               <tr key={i}>
-                {Object.values(row).map((col, j) => (
-                  <td key={`${i}-${j}`}>{col}</td>
-                ))}
+                {Object.values(row).map((col, j) => {
+                  const prettyColumn = col
+                    .replace(/^\s*✓\s*/, "✅ ")
+                    .replace(/^\s*X\s*/, "❌ ");
+
+                  return <td key={`${i}-${j}`}>{prettyColumn}</td>;
+                })}
               </tr>
             ))}
           </tbody>
@@ -128,6 +132,13 @@ const blockRenderer = (
       );
 
     default:
-      return null;
+      return (
+        <>
+          <h4 style={{color: 'red'}}>Warning: Unhandled block of type &#39;{ctx.record.__typename}&#39;</h4>
+          <pre>
+            <code>{JSON.stringify(ctx.record, null, 2)}</code>
+          </pre>
+        </>
+      );
   }
 };
